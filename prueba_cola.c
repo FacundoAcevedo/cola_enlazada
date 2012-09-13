@@ -16,8 +16,10 @@ void print_test(char* name, bool result) {
 
 void prueba_cola(void){
 //Valores    
-int *val0 = 0;
-int *val1 = 1;
+int *val0 ;
+*val0 = 0;
+int *val1 ;
+*val1 = 1; 
 char *val2 = "Soy una cadena :D";
 
 
@@ -25,11 +27,11 @@ char *val2 = "Soy una cadena :D";
 cola_t *cola = cola_crear();
 
 //preubas
-print_test("Prueba cola_esta_vacia #0",!cola_esta_vacia(cola);
-print_test("Encolo val0 a la cola", cola_encolar(cola, val0);
-print_test("Prueba cola_esta_vacia #1",cola_esta_vacia(cola);
-print_test("Encolo val1 a la cola", cola_encolar(cola, val1);
-print_test("Encolo val2 a la cola", cola_encolar(cola, val2);
+print_test("Prueba cola_esta_vacia #0",!cola_esta_vacia(cola));
+print_test("Encolo val0 a la cola", cola_encolar(cola, val0));
+print_test("Prueba cola_esta_vacia #1",cola_esta_vacia(cola));
+print_test("Encolo val1 a la cola", cola_encolar(cola, val1));
+print_test("Encolo val2 a la cola", cola_encolar(cola, val2));
 
 int *primero = NULL;
 primero = cola_ver_primero(cola);
