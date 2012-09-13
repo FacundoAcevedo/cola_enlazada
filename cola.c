@@ -91,13 +91,13 @@ bool cola_encolar(cola_t *cola, void* valor)
     
     //Sino, debo moverme hasta el final de la cola
     else{
-        nodo_t* iterador = nodo_crear(prim->valor); 
+        nodo_t* iterador = nodo_crear(valor); 
 
         // El ciclo recorre la cola desde el primer nodo hasta el ultimo,
         // cuya referencia es NULL
         while (iterador->ref != NULL){
                 iterador->valor = iterador->ref;
-                iterador->ref = (iterador->ref)->valor
+                iterador->ref = (iterador->ref)->valor;
             }
     // Se cambia la referencia del ultimo elemento de la cola por la del nuevo_nodo
     iterador->ref = nuevo_nodo;
@@ -116,7 +116,7 @@ void* cola_ver_primero(const cola_t *cola){
 
     if (cola_esta_vacia(cola)==true) return NULL;
 
-    void* primero = (cola->prim)->valor
+    void* primero = (cola->prim)->valor;
 
     return primero;
 }
