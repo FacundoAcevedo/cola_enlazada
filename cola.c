@@ -96,11 +96,11 @@ bool cola_encolar(cola_t *cola, void* valor)
         // El ciclo recorre la cola desde el primer nodo hasta el ultimo,
         // cuya referencia es NULL
         while (iterador->ref != NULL){
-                iterador->valor = iterador->referencia;
-                iterador->referencia = (iterador->referencia)->valor
+                iterador->valor = iterador->ref;
+                iterador->ref = (iterador->ref)->valor
             }
     // Se cambia la referencia del ultimo elemento de la cola por la del nuevo_nodo
-    iterador->referencia = nuevo_nodo;
+    iterador->ref = nuevo_nodo;
     
     // Incremento el tamanio
     cola->tamanio += 1;
@@ -112,7 +112,14 @@ bool cola_encolar(cola_t *cola, void* valor)
 // elementos, se devuelve el valor del primero, si estÃ¡ vacÃ­a devuelve NULL.
 // Pre: la cola fue creada.
 // Post: se devolviÃ³ el primer elemento de la cola, cuando no estÃ¡ vacÃ­a.
-void* cola_ver_primero(const cola_t *cola);
+void* cola_ver_primero(const cola_t *cola){
+
+    if (cola_esta_vacia(cola)==true) return NULL;
+
+    void* primero = (cola->prim)->valor
+
+    return primero;
+}
 
 // Saca el primer elemento de la cola. Si la cola tiene elementos, se quita el
 // primero de la cola, y se devuelve su valor, si estÃ¡ vacÃ­a, devuelve NULL.
@@ -120,7 +127,21 @@ void* cola_ver_primero(const cola_t *cola);
 // Post: se devolviÃ³ el valor del primer elemento anterior, la cola
 // contiene un elemento menos, si la cola no estaba vacÃ­a.
 void* cola_desencolar(cola_t *cola);
+    
+    if (cola_esta_vacia(cola) == true) return NULL;
+    
+    //Guardo el valor a desencolar
+    void* desencolado = (cola->prim)->valor;
+    // Cambio la referencia de prim. Ahora vale la referencia al segundo nodo.
+    cola->prim = (cola->prim)->ref;
 
+    // Destruyo el nodo desencolado? ¿¿??
+
+    // Disminuyo el tamanio
+    cola->tamanio -= 1;
+    // Devuelvo el valor del desencolado
+    return desencolado;
+}    
 
 
 
