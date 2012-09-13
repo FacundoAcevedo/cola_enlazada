@@ -97,7 +97,7 @@ bool cola_encolar(cola_t *cola, void* valor)
         // cuya referencia es NULL
         while (iterador->ref != NULL){
                 iterador->valor = iterador->ref;
-                iterador->ref = (iterador->ref)->valor
+                iterador->ref = (iterador->ref)->valor;
             }
     // Se cambia la referencia del ultimo elemento de la cola por la del nuevo_nodo
     iterador->ref = nuevo_nodo;
