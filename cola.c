@@ -82,7 +82,7 @@ bool cola_encolar(cola_t *cola, void* valor)
     //Construyo el nuevo nodo que quiero encolar. nuevo_nodo->valor = valor
     // y nuevo_nodo->referencia = NULL porque esta al final de la cola
     nodo_t* nuevo_nodo = nodo_crear(valor);
-    nuevo_nodo->referencia = NULL;
+    nuevo_nodo->ref = NULL;
     
     //Ubico nuevo_nodo:
     
@@ -126,7 +126,8 @@ void* cola_ver_primero(const cola_t *cola){
 // Pre: la cola fue creada.
 // Post: se devolviÃ³ el valor del primer elemento anterior, la cola
 // contiene un elemento menos, si la cola no estaba vacÃ­a.
-void* cola_desencolar(cola_t *cola);
+void* cola_desencolar(cola_t *cola)
+{
     
     if (cola_esta_vacia(cola) == true) return NULL;
     
