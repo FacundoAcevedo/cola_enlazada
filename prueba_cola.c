@@ -101,6 +101,11 @@ print_test("21) Prueba cola_desencolar6", cola_aux == cola_desencolar(cola));
 print_test("22) Prueba cola_desencolar7", pila2 == cola_desencolar(cola));
 print_test("23) Prueba cola_esta_vacia #5", cola_esta_vacia(cola));
 
+cola_encolar(cola, val0);
+cola_encolar(cola, val0);
+cola_encolar(cola, val0);
+cola_encolar(cola, val0);
+cola_destruir(cola, NULL);
 
 
 
