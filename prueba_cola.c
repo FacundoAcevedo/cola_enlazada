@@ -107,7 +107,7 @@ cola_encolar(cola, val0);
 cola_encolar(cola, val0);
 cola_destruir(cola, NULL);
 
-print_test("24) Prueba cola_esta_vacia #6", cola_esta_vacia(cola));
+
 
 
 

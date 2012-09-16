@@ -54,7 +54,10 @@ cola_t* cola_crear()
 void cola_destruir(cola_t *cola, void destruir_dato(void*))
 {
 	puts("Entre a cola_destruir");
-	if (cola->tamanio == 0) free(cola);
+	if (cola->tamanio == 0){
+        free(cola);
+        return;
+    }
 	else{
 		nodo_t* siguiente = cola->prim;
         nodo_t* dir_nodos[cola->tamanio];
@@ -87,14 +90,14 @@ void cola_destruir(cola_t *cola, void destruir_dato(void*))
         free(siguiente);
 		free(cola);
 	}	
-	return;
 }
 
 // Devuelve verdadero o falso, segÃºn si la cola tiene o no elementos encolados.
 // Pre: la cola fue creada.
 bool cola_esta_vacia(const cola_t *cola)
 {
-    if(cola->tamanio == 0) return true;
+    if (!cola) return NULL;
+    else if(cola->tamanio == 0) return true;
     return false;
 }
 
