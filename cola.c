@@ -16,7 +16,7 @@ struct cola
 {
     nodo_t* prim;
     nodo_t* ultimo;
-    size_t tamanio;
+    long int tamanio;
 };
 
 //FUNCION AUXILIAR: creacion de un nodo
@@ -32,7 +32,7 @@ struct cola
 }
 
 //FUNCION AUXILIAR: devuelve tamanio
-int tamanio_return(cola_t* cola){
+long int tamanio_return(cola_t* cola){
 	return cola->tamanio;
 }
 
@@ -60,15 +60,33 @@ void cola_destruir(cola_t *cola, void destruir_dato(void*))
 	puts("Entre a cola_destruir");
 	if (cola->tamanio == 0) free(cola);
 	else{
-		puts("Entre al else");
 		nodo_t* siguiente = cola->prim;
-		
-		while (siguiente->ref != NULL){
-			puts("Entre al while");
-			printf("%p\n", siguiente);
-			free(siguiente);
-			siguiente= siguiente->ref;
-		}
+        nodo_t* dir_nodos[cola->tamanio];
+        int i;
+        
+        //Revisar si llega hasta el final!!	
+        if (destruir_dato != NULL){
+	    	while (siguiente->ref != NULL){
+                puts("ENTRE A DESTRUIR DATO!");
+	    		destruir_dato(siguiente->valor);
+	    		siguiente = siguiente->ref;
+	    	}//while
+        }//if
+
+        //Genero una lista con las direcciones de los nodos
+        siguiente = cola->prim;
+        dir_nodos[0] = cola->prim;
+        puts("Genero la lista de direcciones");
+        for(i = 1; i < (cola->tamanio -1); i++){
+            dir_nodos[i] = siguiente->ref;
+    	}//for
+        //mato a los nodos!!!!
+        for(i = 0; i < (cola->tamanio -1); i++){
+            free(dir_nodos[i]);
+        }
+
+
+        free(siguiente);
 		free(cola);
 	}	
 	return;
