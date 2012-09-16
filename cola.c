@@ -9,14 +9,15 @@ typedef struct nodo nodo_t;
 struct nodo
 {
     void* valor;
-    struct nodo* ref;
+    size_t*  ref;
+    /*struct nodo* ref;*/
 };
 
 struct cola
 {
-    nodo_t* prim;
-    nodo_t* ultimo;
-    size_t tamanio;
+    size_t* prim;
+    size_t* ultimo;
+    unsigned int tamanio;
 };
 
 //FUNCION AUXILIAR: creacion de un nodo
@@ -25,9 +26,8 @@ struct cola
     nodo_t* nodo = malloc(sizeof(nodo_t));
     if (nodo == NULL) return NULL;
     nodo->valor = valor;
-    nodo_t* ref = malloc(sizeof(nodo_t));
-    if (ref == NULL) return NULL;
-    nodo->ref = ref;
+    /*nodo_t* ref = malloc(sizeof(nodo_t));*/
+    nodo->ref = NULL;
     return nodo;
 }
 
@@ -41,10 +41,8 @@ cola_t* cola_crear()
 {
     cola_t* cola = malloc(sizeof(cola_t));
     if (cola == NULL) return NULL;
-    nodo_t* nodo1 = nodo_crear(NULL);
-    nodo_t* nodo2 = nodo_crear(NULL);
-    cola->prim = nodo1;
-    cola->ultimo= nodo2;
+    cola->prim = NULL;
+    cola->ultimo= NULL;
     cola->tamanio =0;
     return cola;
 }
@@ -64,10 +62,10 @@ void cola_destruir(cola_t *cola, void destruir_dato(void*))
 		nodo_t* siguiente = cola->prim;
 		while (siguiente->ref != NULL){
 			puts("Entre al while");
-			free(&siguiente);
+			free(siguiente);
 			siguiente= siguiente->ref;
 		}
-		free(cola);
+	free(cola);
 	}	
 	return;
 }
@@ -91,7 +89,7 @@ bool cola_encolar(cola_t *cola, void* valor)
     //Construyo el nuevo nodo que quiero encolar. nuevo_nodo->valor = valor
     // y nuevo_nodo->referencia = NULL porque esta al final de la cola
     nodo_t* nuevo_nodo = nodo_crear(valor);
-    nuevo_nodo->ref = NULL;
+    /*nuevo_nodo->ref = NULL;*/
     
     //Ubico nuevo_nodo:
     
@@ -103,10 +101,13 @@ bool cola_encolar(cola_t *cola, void* valor)
 	}
     //Sino, debo moverme hasta el final de la cola
     else {
-		nodo_t* iterador = cola->prim;
+		/*nodo_t* iterador = cola->prim;*/
+        size_t* iterador;
+        iterador = cola->prim;
+        
         while (true){
 				if (iterador->ref == NULL){
-					iterador->ref = nuevo_nodo;
+					iterador->ref = (size_t)nuevo_nodo;
 					// Incremento el tamanio
 					cola->tamanio += 1;
 					break;
