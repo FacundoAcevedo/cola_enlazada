@@ -5,38 +5,50 @@
 #include "cola.h"
 
 typedef struct nodo nodo_t;
-
+//~ 
 struct nodo
 {
     void* valor;
-    nodo_t* ref;
+    struct nodo* ref;
 };
-
+//~ 
 struct cola
 {
     nodo_t* prim;
+    nodo_t* ultimo;
     size_t tamanio;
 };
+//~ 
+//~ //FUNCION AUXILIAR: creacion de un nodo
+//~ //Recibe un valor. Devuelve el nodo.
+ nodo_t* nodo_crear(void* valor){
+    nodo_t* nodo = malloc(sizeof(nodo_t));
+    if (nodo == NULL) return NULL;
+    nodo->valor = valor;
+    nodo_t* ref = malloc(sizeof(nodo_t));
+    if (ref == NULL) return NULL;
+    nodo->ref = ref;
+    return nodo;
+}
+
+//FUNCION AUXILIAR: imprime tamanio
+int tamanio_print(cola_t* cola){
+	return cola->tamanio;
+}
 
 
 cola_t* cola_crear()
 {
     cola_t* cola = malloc(sizeof(cola_t));
     if (cola == NULL) return NULL;
-    cola->prim = NULL;
-    cola->tamanio = 0;
+    nodo_t* nodo1 = nodo_crear(NULL);
+    nodo_t* nodo2 = nodo_crear(NULL);
+    cola->prim = nodo1;
+    cola->ultimo= nodo2;
+    cola->tamanio =0;
     return cola;
 }
 
-//FUNCION AUXILIAR: creacion de un nodo
-//Recibe un valor. Devuelve el nodo.
-nodo_t* nodo_crear(void* valor){
-    nodo_t* nodo = malloc(sizeof(nodo_t));
-    if (nodo == NULL) return NULL;
-    nodo->valor = valor;
-    nodo_t* ref = NULL;
-    return nodo;
-}
 
 // Destruye la cola. Si se recibe la funciÃ³n destruir_dato por parÃ¡metro,
 // para cada uno de los elementos de la cola llama a destruir_dato.
@@ -86,25 +98,28 @@ bool cola_encolar(cola_t *cola, void* valor)
     
     //Ubico nuevo_nodo:
     
-    //Si la cola está vacía, nuevo_nodo es el primer nodo de la cola
-    if (cola->tamanio == 0) cola->prim = nuevo_nodo;
-    
+    //Si la cola está vacía, nuevo_nodo es el primer y el último nodo de la cola
+    if (cola->tamanio == 0){
+		cola->prim = nuevo_nodo;
+		cola->ultimo = nuevo_nodo;
+		cola->tamanio += 1;
+	}
     //Sino, debo moverme hasta el final de la cola
-    else{
-        nodo_t* iterador = nodo_crear(valor); 
-
-        // El ciclo recorre la cola desde el primer nodo hasta el ultimo,
-        // cuya referencia es NULL
-        while (iterador->ref != NULL){
-                iterador->valor = iterador->ref;
-                iterador->ref = (iterador->ref)->valor;
-            }
+    else {
+		nodo_t* iterador = cola->prim;
+        while (true){
+				if (iterador->ref == NULL){
+					iterador->ref = nuevo_nodo;
+					// Incremento el tamanio
+					cola->tamanio += 1;
+					break;
+				}
+                iterador= iterador->ref;
+        }
     // Se cambia la referencia del ultimo elemento de la cola por la del nuevo_nodo
-    iterador->ref = nuevo_nodo;
-    
-    // Incremento el tamanio
-    cola->tamanio += 1;
+    cola->ultimo = iterador->ref;
     }
+	return true;
 }
 
 
@@ -112,12 +127,10 @@ bool cola_encolar(cola_t *cola, void* valor)
 // elementos, se devuelve el valor del primero, si estÃ¡ vacÃ­a devuelve NULL.
 // Pre: la cola fue creada.
 // Post: se devolviÃ³ el primer elemento de la cola, cuando no estÃ¡ vacÃ­a.
-void* cola_ver_primero(const cola_t *cola){
-
+void* cola_ver_primero(const cola_t *cola)
+{
     if (cola_esta_vacia(cola)==true) return NULL;
-
     void* primero = (cola->prim)->valor;
-
     return primero;
 }
 
@@ -128,7 +141,6 @@ void* cola_ver_primero(const cola_t *cola){
 // contiene un elemento menos, si la cola no estaba vacÃ­a.
 void* cola_desencolar(cola_t *cola)
 {
-    
     if (cola_esta_vacia(cola) == true) return NULL;
     
     //Guardo el valor a desencolar
@@ -143,6 +155,3 @@ void* cola_desencolar(cola_t *cola)
     // Devuelvo el valor del desencolado
     return desencolado;
 }    
-
-
-
