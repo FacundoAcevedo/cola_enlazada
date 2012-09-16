@@ -81,7 +81,7 @@ void cola_destruir(cola_t *cola, void destruir_dato(void*))
             dir_nodos[i] = siguiente->ref;
     	}//for
         //mato a los nodos!!!!
-        for(i = 0; i < (cola->tamanio -1); i++){
+        for(i = 0; i < (cola->tamanio -2); i++){
             free(dir_nodos[i]);
         }
 
