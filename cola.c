@@ -25,8 +25,9 @@ struct cola
     nodo_t* nodo = malloc(sizeof(nodo_t));
     if (nodo == NULL) return NULL;
     nodo->valor = valor;
-    nodo_t* ref = malloc(sizeof(nodo_t));
-    if (ref == NULL) return NULL;
+    /*nodo_t* ref = malloc(sizeof(nodo_t));*/
+    /*if (ref == NULL) return NULL;*/
+    nodo_t* ref = NULL;
     nodo->ref = ref;
     return nodo;
 }
@@ -41,8 +42,10 @@ cola_t* cola_crear()
 {
     cola_t* cola = malloc(sizeof(cola_t));
     if (cola == NULL) return NULL;
-    nodo_t* nodo1 = nodo_crear(NULL);
-    nodo_t* nodo2 = nodo_crear(NULL);
+    /*nodo_t* nodo1 = nodo_crear(NULL);*/
+    /*nodo_t* nodo2 = nodo_crear(NULL);*/
+    nodo_t* nodo1 = NULL;
+    nodo_t* nodo2 = NULL;
     cola->prim = nodo1;
     cola->ultimo= nodo2;
     cola->tamanio =0;
@@ -75,13 +78,14 @@ void cola_destruir(cola_t *cola, void destruir_dato(void*))
 
         //Genero una lista con las direcciones de los nodos
         siguiente = cola->prim;
-        dir_nodos[0] = cola->prim;
         puts("Genero la lista de direcciones");
-        for(i = 1; i < (cola->tamanio -2); i++){
-            dir_nodos[i] = siguiente->ref;
+        printf("Son %li nodos\n",cola->tamanio);
+        for(i = 0; i < (cola->tamanio ); i++){
+            dir_nodos[i] = siguiente;
+            siguiente = siguiente->ref;
     	}//for
         //mato a los nodos!!!!
-        for(i = 0; i < (cola->tamanio -1); i++){
+        for(i = 0; i < (cola->tamanio ); i++){
             puts("libero los nodos");
             free(dir_nodos[i]);
         }
@@ -112,7 +116,7 @@ bool cola_encolar(cola_t *cola, void* valor)
     //Construyo el nuevo nodo que quiero encolar. nuevo_nodo->valor = valor
     // y nuevo_nodo->referencia = NULL porque esta al final de la cola
     nodo_t* nuevo_nodo = nodo_crear(valor);
-    nuevo_nodo->ref = NULL;
+    /*nuevo_nodo->ref = NULL;*/
     
     //Ubico nuevo_nodo:
     
@@ -160,13 +164,16 @@ void* cola_ver_primero(const cola_t *cola)
 void* cola_desencolar(cola_t *cola)
 {
     if (cola_esta_vacia(cola) == true) return NULL;
+    nodo_t* nodo_aux = NULL;
     
     //Guardo el valor a desencolar
     void* desencolado = (cola->prim)->valor;
     // Cambio la referencia de prim. Ahora vale la referencia al segundo nodo.
-    cola->prim = (cola->prim)->ref;
+    nodo_aux = cola->prim;
 
+    cola->prim = (cola->prim)->ref;
     // Destruyo el nodo desencolado? ¿¿??
+    free(nodo_aux);
 
     // Disminuyo el tamanio
     cola->tamanio -= 1;
