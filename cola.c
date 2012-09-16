@@ -32,18 +32,11 @@ struct cola
     return nodo;
 }
 
-//FUNCION AUXILIAR: devuelve tamanio
-long int tamanio_return(cola_t* cola){
-	return cola->tamanio;
-}
-
 
 cola_t* cola_crear()
 {
     cola_t* cola = malloc(sizeof(cola_t));
     if (cola == NULL) return NULL;
-    /*nodo_t* nodo1 = nodo_crear(NULL);*/
-    /*nodo_t* nodo2 = nodo_crear(NULL);*/
     nodo_t* nodo1 = NULL;
     nodo_t* nodo2 = NULL;
     cola->prim = nodo1;
