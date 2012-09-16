@@ -16,6 +16,11 @@ void print_test(char* name, bool result) {
 	printf("%s: %s\n", name, result? "OK" : "ERROR");
 }
 
+void destruir_pila_o_cola(void* dato){
+	if (typeof(dato) == pila_t*) pila_destruir(dato);
+	else cola_destruir(dato);
+}
+
 void prueba_cola(void){
 // DATOS ESTATICOS    
 int cero = 0;
@@ -100,6 +105,25 @@ print_test("21) Prueba cola_desencolar6", cola_aux == cola_desencolar(cola));
 //Desencolo el tercer elemento de la cola: pila2. La cola queda vacia.
 print_test("22) Prueba cola_desencolar7", pila2 == cola_desencolar(cola));
 print_test("23) Prueba cola_esta_vacia #5", cola_esta_vacia(cola));
+
+// Encolo pilas en la cola y la destruyo, pasándole la función pila_destruir().
+cola_encolar(cola, pila1);
+cola_encolar(cola, pila2);
+cola_encolar(cola, pila1);
+cola_destruir(cola, pila_destruir(void*));
+
+// Encolo colas en la cola y la destruyo, pasándole la función cola_destruir().
+cola_t* cola_de_colas = cola_crear();
+cola_encolar(cola, cola_aux);
+cola_encolar(cola, cola_aux);
+cola_destruir(cola, cola_destruir(void*));
+
+// Encolo colas y pilas y la destruyo, pasándole la función destruir_pila_o_cola().
+cola_t* cola_de_cyp = cola_crear();
+cola_encolar(cola, cola_aux);
+cola_encolar(cola, pila1);
+cola_destruir(cola, destruir_pila_o_cola(void*));
+
 
 cola_encolar(cola, val0);
 cola_encolar(cola, val0);
