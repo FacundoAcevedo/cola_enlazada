@@ -58,17 +58,19 @@ cola_t* cola_crear()
 void cola_destruir(cola_t *cola, void destruir_dato(void*))
 {
 	puts("Entre a cola_destruir");
-	//~ if (cola->tamanio = 0) free(cola);
-	//~ else{
-		//~ puts("Entre al else");
-		//~ nodo_t* siguiente = cola->prim;
-		//~ while (siguiente->ref != NULL){
-			//~ puts("Entre al while");
-			//~ free(&siguiente);
-			//~ siguiente= siguiente->ref;
-		//~ }
-		//~ free(cola);
-	//~ }	
+	if (cola->tamanio == 0) free(cola);
+	else{
+		puts("Entre al else");
+		nodo_t* siguiente = cola->prim;
+		
+		while (siguiente->ref != NULL){
+			puts("Entre al while");
+			printf("%p\n", siguiente);
+			free(siguiente);
+			siguiente= siguiente->ref;
+		}
+		free(cola);
+	}	
 	return;
 }
 
