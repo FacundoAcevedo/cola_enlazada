@@ -5,22 +5,22 @@
 #include "cola.h"
 
 typedef struct nodo nodo_t;
-//~ 
+
 struct nodo
 {
     void* valor;
     struct nodo* ref;
 };
-//~ 
+
 struct cola
 {
     nodo_t* prim;
     nodo_t* ultimo;
     size_t tamanio;
 };
-//~ 
-//~ //FUNCION AUXILIAR: creacion de un nodo
-//~ //Recibe un valor. Devuelve el nodo.
+
+//FUNCION AUXILIAR: creacion de un nodo
+//Recibe un valor. Devuelve el nodo.
  nodo_t* nodo_crear(void* valor){
     nodo_t* nodo = malloc(sizeof(nodo_t));
     if (nodo == NULL) return NULL;
@@ -31,8 +31,8 @@ struct cola
     return nodo;
 }
 
-//FUNCION AUXILIAR: imprime tamanio
-int tamanio_print(cola_t* cola){
+//FUNCION AUXILIAR: devuelve tamanio
+int tamanio_return(cola_t* cola){
 	return cola->tamanio;
 }
 
@@ -57,22 +57,19 @@ cola_t* cola_crear()
 // Post: se eliminaron todos los elementos de la cola.
 void cola_destruir(cola_t *cola, void destruir_dato(void*))
 {
-   if (destruir_dato == NULL) free(cola);
-    //le paso los nodos a destruir
-    void *array[cola->tamanio];
-    //Obtengo todas las direcciones de memoria 
-    for (int indice = 1; indice < (cola->tamanio)-1; indice++)
-    {
-        // ESTA INCPLETA!!! RE NCOMPLETA!!
-        if (indice == 0)
-        {
-            array[0] = cola->prim;
-
-        }
-        /*array[indice] = *((array[indice]));*/
-        cola_desencolar(cola);
-        destruir_dato(array[indice]);
-    }
+	puts("Entre a cola_destruir");
+	if (cola->tamanio == 0) free(cola);
+	else{
+		puts("Entre al else");
+		nodo_t* siguiente = cola->prim;
+		while (siguiente->ref != NULL){
+			puts("Entre al while");
+			free(&siguiente);
+			siguiente= siguiente->ref;
+		}
+		free(cola);
+	}	
+	return;
 }
 
 // Devuelve verdadero o falso, segÃºn si la cola tiene o no elementos encolados.
