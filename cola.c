@@ -77,11 +77,12 @@ void cola_destruir(cola_t *cola, void destruir_dato(void*))
         siguiente = cola->prim;
         dir_nodos[0] = cola->prim;
         puts("Genero la lista de direcciones");
-        for(i = 1; i < (cola->tamanio -1); i++){
+        for(i = 1; i < (cola->tamanio -2); i++){
             dir_nodos[i] = siguiente->ref;
     	}//for
         //mato a los nodos!!!!
         for(i = 0; i < (cola->tamanio -1); i++){
+            puts("libero los nodos");
             free(dir_nodos[i]);
         }
 
