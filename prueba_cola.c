@@ -122,6 +122,7 @@ print_test("22) Prueba cola_desencolar", pila2 == cola_desencolar(cola_pilas));
 print_test("23) Prueba cola_esta_vacia", cola_esta_vacia(cola_pilas));
 // Encolo pila1 de nuevo. La cola_pilas tiene 2 elementos.
 print_test("BISSS) Encolo pila1 a la cola_pilas", cola_encolar(cola_pilas, pila1)); //OK
+print_test("BISSS) Encolo pila2 a la cola_pilas", cola_encolar(cola_pilas, pila2)); //OK
 
 printf("\n\n");
 
@@ -147,6 +148,7 @@ cola_destruir(cola_aux, NULL);
 
 // Destruyo cola_colas
 cola_destruir(cola_colas, NULL);
+
 // Destruyo cola_pilas
 cola_destruir(cola_pilas, (*destruir));
 
