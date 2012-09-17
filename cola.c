@@ -64,13 +64,21 @@ void cola_destruir(cola_t *cola, void destruir_dato(void*))
         int i;
         
         //Revisar si llega hasta el final!!	
-        if (destruir_dato != NULL){
-	    	while (siguiente->ref != NULL){
-                puts("ENTRE A DESTRUIR DATO!");
-	    		destruir_dato(siguiente->valor);
-	    		siguiente = siguiente->ref;
-	    	}//while
-        }//if
+        if (destruir_dato != NULL){ 
+			puts("ENTRE AL IF DE DESTRUIR DATO!");
+			while (true){
+				puts("ENTRE AL WHILE DE DESTRUIR DATO!");
+				destruir_dato(siguiente->valor);	
+				if (siguiente->ref == NULL) break;
+				siguiente = siguiente->ref;
+				}
+			}
+	    	//~ while (siguiente->ref != NULL){
+				//~ puts("ENTRE AL WHILE DE DESTRUIR DATO!");
+	    		//~ destruir_dato(siguiente->valor);
+	    		//~ siguiente = siguiente->ref;
+	    //while
+        //if
 
         //Genero una lista con las direcciones de los nodos
         siguiente = cola->prim;

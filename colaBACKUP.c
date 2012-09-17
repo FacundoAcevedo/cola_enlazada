@@ -16,7 +16,7 @@ struct cola
 {
     nodo_t* prim;
     nodo_t* ultimo;
-    size_t tamanio;
+    long int tamanio;
 };
 
 //FUNCION AUXILIAR: creacion de un nodo
@@ -25,15 +25,11 @@ struct cola
     nodo_t* nodo = malloc(sizeof(nodo_t));
     if (nodo == NULL) return NULL;
     nodo->valor = valor;
-    nodo_t* ref = malloc(sizeof(nodo_t));
-    if (ref == NULL) return NULL;
+    /*nodo_t* ref = malloc(sizeof(nodo_t));*/
+    /*if (ref == NULL) return NULL;*/
+    nodo_t* ref = NULL;
     nodo->ref = ref;
     return nodo;
-}
-
-//FUNCION AUXILIAR: devuelve tamanio
-int tamanio_return(cola_t* cola){
-	return cola->tamanio;
 }
 
 
@@ -41,8 +37,8 @@ cola_t* cola_crear()
 {
     cola_t* cola = malloc(sizeof(cola_t));
     if (cola == NULL) return NULL;
-    nodo_t* nodo1 = nodo_crear(NULL);
-    nodo_t* nodo2 = nodo_crear(NULL);
+    nodo_t* nodo1 = NULL;
+    nodo_t* nodo2 = NULL;
     cola->prim = nodo1;
     cola->ultimo= nodo2;
     cola->tamanio =0;
@@ -58,27 +54,50 @@ cola_t* cola_crear()
 void cola_destruir(cola_t *cola, void destruir_dato(void*))
 {
 	puts("Entre a cola_destruir");
-	if (cola->tamanio == 0) free(cola);
+	if (cola->tamanio == 0){
+        free(cola);
+        return;
+    }
 	else{
-		puts("Entre al else");
 		nodo_t* siguiente = cola->prim;
-		
-		while (siguiente->ref != NULL){
-			puts("Entre al while");
-			printf("%p\n", siguiente);
-			free(siguiente);
-			siguiente= siguiente->ref;
-		}
+        nodo_t* dir_nodos[cola->tamanio];
+        int i;
+        
+        //Revisar si llega hasta el final!!	
+        if (destruir_dato != NULL){
+	    	while (siguiente->ref != NULL){
+                puts("ENTRE A DESTRUIR DATO!");
+	    		destruir_dato(siguiente->valor);
+	    		siguiente = siguiente->ref;
+	    	}//while
+        }//if
+
+        //Genero una lista con las direcciones de los nodos
+        siguiente = cola->prim;
+        puts("Genero la lista de direcciones");
+        printf("Son %li nodos\n",cola->tamanio);
+        for(i = 0; i < (cola->tamanio ); i++){
+            dir_nodos[i] = siguiente;
+            siguiente = siguiente->ref;
+    	}//for
+        //mato a los nodos!!!!
+        for(i = 0; i < (cola->tamanio ); i++){
+            puts("libero los nodos");
+            free(dir_nodos[i]);
+        }
+
+
+        free(siguiente);
 		free(cola);
 	}	
-	return;
 }
 
 // Devuelve verdadero o falso, segÃºn si la cola tiene o no elementos encolados.
 // Pre: la cola fue creada.
 bool cola_esta_vacia(const cola_t *cola)
 {
-    if(cola->tamanio == 0) return true;
+    if (!cola) return NULL;
+    else if(cola->tamanio == 0) return true;
     return false;
 }
 
@@ -93,7 +112,7 @@ bool cola_encolar(cola_t *cola, void* valor)
     //Construyo el nuevo nodo que quiero encolar. nuevo_nodo->valor = valor
     // y nuevo_nodo->referencia = NULL porque esta al final de la cola
     nodo_t* nuevo_nodo = nodo_crear(valor);
-    nuevo_nodo->ref = NULL;
+    /*nuevo_nodo->ref = NULL;*/
     
     //Ubico nuevo_nodo:
     
@@ -141,13 +160,16 @@ void* cola_ver_primero(const cola_t *cola)
 void* cola_desencolar(cola_t *cola)
 {
     if (cola_esta_vacia(cola) == true) return NULL;
+    nodo_t* nodo_aux = NULL;
     
     //Guardo el valor a desencolar
     void* desencolado = (cola->prim)->valor;
     // Cambio la referencia de prim. Ahora vale la referencia al segundo nodo.
-    cola->prim = (cola->prim)->ref;
+    nodo_aux = cola->prim;
 
+    cola->prim = (cola->prim)->ref;
     // Destruyo el nodo desencolado? ¿¿??
+    free(nodo_aux);
 
     // Disminuyo el tamanio
     cola->tamanio -= 1;

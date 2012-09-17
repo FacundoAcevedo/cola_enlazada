@@ -31,8 +31,8 @@ void pila_destruir(pila_t *pila)
     //es una pre-condicion, pero igual, verifico que la pila haya sido creada
 
     
-    if (pila->cantidad != 0){
-        free(*(pila->datos));
+    if (pila->cantidad != 0 && pila->datos != NULL){
+
         free(pila->datos);
         }
     if (pila != NULL) free(pila);
