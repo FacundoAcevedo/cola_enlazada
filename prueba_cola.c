@@ -18,7 +18,7 @@ void print_test(char* name, bool result) {
 
 void (destruir)(void* dato) {
 	pila_destruir((pila_t*)dato);
-	puts("OK");
+
 }
 
 void prueba_cola(void){
@@ -121,8 +121,8 @@ print_test("21) Prueba cola_desencolar", pila1 == cola_desencolar(cola_pilas));
 print_test("22) Prueba cola_desencolar", pila2 == cola_desencolar(cola_pilas));
 print_test("23) Prueba cola_esta_vacia", cola_esta_vacia(cola_pilas));
 // Encolo pila1 de nuevo. La cola_pilas tiene 2 elementos.
-print_test("BISSS) Encolo pila1 a la cola_pilas", cola_encolar(cola_pilas, pila1)); //OK
-print_test("BISSS) Encolo pila2 a la cola_pilas", cola_encolar(cola_pilas, pila2)); //OK
+print_test("BIS) Encolo pila1 a la cola_pilas", cola_encolar(cola_pilas, pila1)); //OK
+print_test("BIS) Encolo pila2 a la cola_pilas", cola_encolar(cola_pilas, pila2)); //OK
 
 printf("\n\n");
 

@@ -1,0 +1,19 @@
+ Cola Enlazada
+Se adjunta el archivo cola.h correspondiente al ejercicio de la cola enlazada para 
+el Lunes 17 de Septiembre.
+
+El ejercicio es muy similar al realizado para la pila.  Excepto que para la función 
+para destruir la cola recibe por parámetro una función para destruir uno a uno los 
+elementos, que puede ser NULL en el caso de que no haya que destruirlos.
+
+La cola debe ser enlazada, es decir que en lugar de estar implementada con un 
+arreglo, está implementada mediante nodos enlazados, de los cuales se desencola el 
+primero y se encola a continuación del último.
+
+De la misma forma que para la pila, deben entregar un archivo prueba_cola.c que 
+haga las correspondientes pruebas unitarias para la cola.
+
+El código debe ser entregado por mail, enviando ambos archivos a la dirección 
+tps.7541rw@gmail.com (un solo mail por grupo).  En el asunto deben indicar:
+
+Cola - Padrón1 - Apellido1 - Padrón2 - Apellido2.
